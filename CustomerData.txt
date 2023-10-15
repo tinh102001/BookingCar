@@ -1,0 +1,6 @@
+1	Peter Parker	08621191856	Peter@gmail.com	900 Santiago de Compostela Parkway
+2	Bette Job	08991046942	Bette@gmail.com	1531 Sal Drive
+3	Grace Mostel	08517177212	Grace@gmail.com	320 Brest Avenue
+4	Joe Swank	08176449934	Joe@gmail.com	28 Charlotte Amalie Street
+5	Uma Wood	08109928454	Uma@gmail.com	306 Antofagasta Place
+6	Jennifer B	(378) 123-8255	David@gmail.com	1425 Shikarpur Manor

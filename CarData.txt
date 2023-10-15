@@ -1,0 +1,6 @@
+1	SEDAN	A2313	4	Mitsubishi Lancer Evolution	Available
+2	SEDAN	B4324	4	Volkswagen XL Sport Concept	In Progress
+3	SPORT-UTILITY	C4534	7	Bentley Continental GT3	Available
+4	SEDAN	D4324	4	Acura NSX (2017)	In Progress
+5	SPORTS CAR	E3424	2	Ferrari F40	Available
+6	HATCHBACK	F9849	4	Cadillac Cien Concept	Available
