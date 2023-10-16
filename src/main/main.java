@@ -107,7 +107,6 @@ public class main {
                     String NewStatus = in.nextLine();
                     CarController.updateCarStatus(carID, NewStatus);
                     Back();
-
                     break;
                 case 4:
                     System.out.print("Car's ID: ");
@@ -137,8 +136,8 @@ public class main {
                     System.out.print("Search car: ");
                     String carName = in.nextLine();
                     CarController.searchCarByName(carName);
+                    Back();
                     break;
-
                 case 10:
                     System.out.print("Customer's name: ");
                     String NameCustomer = in.nextLine();
