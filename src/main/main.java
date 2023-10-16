@@ -1,41 +1,14 @@
 package main;
 
-import java.io.*;
 import java.util.Scanner;
 
 import controller.*;
+import model.Booking;
 import model.Car;
 import model.Customer;
 import model.Driver;
 
 public class main {
-//    public static void main(String[] args) throws FileNotFoundException {
-//		CustomerController.showTableCustomer(CustomerController.ListCustomer);
-//		System.out.println(CustomerController.getLastIDCustomer());
-//		Scanner sc = new Scanner(System.in);
-//		String name = sc.nextLine();
-//		String phone = sc.nextLine();
-//		String email = sc.nextLine();
-//		String address = sc.nextLine();
-//		CustomerController.addNewCustomer(name, phone, email, address);
-//		CustomerController.updateCustomer(6,"Jennifer David" ,"(378) 123-8255" , "David@gmail.com", "1425 Shikarpur Manor");
-//		CustomerController.deleteCustomer(1);
-
-//		PersonController.showTablePerson(Customer.ListCustomer);
-//		CustomerController.addNewCustomer("Jennifer A" ,"(378) 123-8255" , "David@gmail.com", "1425 Shikarpur Manor");
-
-
-//		CustomerController.updateCustomer(3,"Jennifer B" ,"(378) 123-8255" , "David@gmail.com", "1425 Shikarpur Manor");
-//		CustomerController.deleteCustomer(1);
-//		PersonController.showTablePerson(Customer.ListCustomer);
-
-//		PersonController.showTablePerson(Driver.ListDriver);
-//		DriverController.addNewDriver("Jennifer David" ,"(378) 123-8255" , "David@gmail.com", "1425 Shikarpur Manor");
-//		DriverController.updateDriver(3,"Jennifer David" ,"(378) 123-8255" , "David@gmail.com", "1425 Shikarpur Manor");
-//		DriverController.deleteDriver(1);
-//		PersonController.showTablePerson(Driver.ListDriver);
-//    }
-
     public static void Menu() {
         System.out.println("    \nAvailable Options");
         System.out.println("    -----------------");
@@ -75,11 +48,8 @@ public class main {
         System.out.println("    \nMANAGE BOOKING\n");
 
         System.out.println("    30. Add new booking");
-        System.out.println("    31. Edit booking");
-        System.out.println("    32. Remove booking");
-        System.out.println("    33. Update booking's status");
-        System.out.println("    34. View all booking");
-
+        System.out.println("    31. View all booking");
+        System.out.println("    32. Checkout booking's status");
 
         System.out.println("    0. Terminate/Exit System");
 
@@ -121,35 +91,28 @@ public class main {
                     String LicensePlate = in.nextLine();
                     System.out.print("Number of seats: ");
                     int NoOfSeats = in.nextInt();
+                    in.nextLine();
                     System.out.print("Description: ");
                     String Description = in.nextLine();
                     System.out.print("Status: ");
                     String Status = in.nextLine();
                     CarController.addNewCar(Type, LicensePlate, NoOfSeats, Description, Status);
-
-                    System.out.println("\nSuccessfully added new car");
-
                     Back();
                     break;
                 case 3:
                     System.out.print("Car's ID: ");
                     int carID = in.nextInt();
+                    in.nextLine();
                     System.out.print("New car's status: ");
                     String NewStatus = in.nextLine();
-
                     CarController.updateCarStatus(carID, NewStatus);
-
-                    System.out.println("\nSuccessfully update car");
-
                     Back();
 
                     break;
                 case 4:
                     System.out.print("Car's ID: ");
                     int removeCarID = in.nextInt();
-
                     CarController.deleteCar(removeCarID);
-
                     Back();
                     break;
                 case 5:
@@ -171,7 +134,9 @@ public class main {
                     Back();
                     break;
                 case 9:
-                    System.out.println();
+                    System.out.print("Search car: ");
+                    String carName = in.nextLine();
+                    CarController.searchCarByName(carName);
                     break;
 
                 case 10:
@@ -184,14 +149,12 @@ public class main {
                     System.out.print("Customer's address: ");
                     String AddressCustomer = in.nextLine();
                     CustomerController.addNewCustomer(NameCustomer, PhoneNoCustomer, EmailCustomer, AddressCustomer);
-
-                    System.out.println("\nSuccessfully added new customer");
-
                     Back();
                     break;
                 case 11:
                     System.out.print("Customer's ID: ");
                     int customerID = in.nextInt();
+                    in.nextLine();
                     System.out.print("New customer's name: ");
                     String NewNameCustomer = in.nextLine();
                     System.out.print("New customer's phone number: ");
@@ -201,33 +164,29 @@ public class main {
                     System.out.print("New customer's address: ");
                     String NewAddressCustomer = in.nextLine();
                     CustomerController.updateCustomer(customerID, NewNameCustomer, NewPhoneNoCustomer, NewEmailCustomer, NewAddressCustomer);
-
-                    System.out.println("\nSuccessfully update customer");
-
                     Back();
                     break;
                 case 12:
                     System.out.print("Customer's ID: ");
                     int RemoveCustomerID = in.nextInt();
                     CustomerController.deleteCustomer(RemoveCustomerID);
-
-                    System.out.println("\nSuccessfully delete customer");
-
                     Back();
                     break;
                 case 13:
-                    PersonController.showTablePerson(Customer.ListCustomer);
+                    CustomerController.showTableCustomer(Customer.ListCustomer);
                     Back();
                     break;
                 case 14:
                     System.out.print("Search customer's by ID: ");
                     int searchCustomerID = in.nextInt();
                     CustomerController.searchCustomerByID(searchCustomerID);
+                    Back();
                     break;
                 case 15:
                     System.out.print("Search customer's by name: ");
                     String searchCustomerName = in.nextLine();
                     CustomerController.searchCustomerByName(searchCustomerName);
+                    Back();
                     break;
                 case 20:
                     System.out.print("Driver's name: ");
@@ -239,13 +198,11 @@ public class main {
                     System.out.print("Driver's address: ");
                     String AddressDriver = in.nextLine();
                     DriverController.addNewDriver(NameDriver, PhoneNoDriver, EmailDriver, AddressDriver);
-
-                    System.out.println("\nSuccessfully added new driver");
-
                     Back();
                 case 21:
                     System.out.print("Driver's ID: ");
                     int driverID = in.nextInt();
+                    in.nextLine();
                     System.out.print("New driver's name: ");
                     String NewNameDriver = in.nextLine();
                     System.out.print("New driver's phone number: ");
@@ -255,33 +212,56 @@ public class main {
                     System.out.print("New driver's address: ");
                     String NewAddressDriver = in.nextLine();
                     DriverController.updateDriver(driverID, NewNameDriver, NewPhoneNoDriver, NewEmailDriver, NewAddressDriver);
-
-                    System.out.println("\nSuccessfully update driver");
-
                     Back();
                     break;
                 case 22:
                     System.out.print("Driver's ID: ");
                     int RemoveDriverID = in.nextInt();
                     DriverController.deleteDriver(RemoveDriverID);
-
-                    System.out.println("\nSuccessfully delete driver");
-
                     Back();
                     break;
                 case 23:
-                    PersonController.showTablePerson(Driver.ListDriver);
+                    DriverController.showTableDriver(Driver.ListDriver);
                     Back();
                     break;
                 case 24:
                     System.out.print("Search driver's by ID: ");
                     int searchDriverID = in.nextInt();
-                    CustomerController.searchCustomerByID(searchDriverID);
+                    DriverController.searchDriverByID(searchDriverID);
+                    Back();
                     break;
                 case 25:
                     System.out.print("Search driver's by name: ");
                     String searchDriverName = in.nextLine();
-                    CustomerController.searchCustomerByName(searchDriverName);
+                    DriverController.searchDriverByName(searchDriverName);
+                    Back();
+                    break;
+                case 30:
+                    System.out.print("Customer's ID: ");
+                    int bookingCustomerID = in.nextInt();
+                    System.out.print("Driver's ID: ");
+                    int bookingDriverID = in.nextInt();
+                    System.out.print("Car's ID: ");
+                    int bookingCarID = in.nextInt();
+                    in.nextLine();
+                    System.out.print("Description: ");
+                    String bookingDescription = in.nextLine();
+                    System.out.print("Date: ");
+                    String bookingDate = in.nextLine();
+                    System.out.print("Status: ");
+                    String bookingStatus = in.nextLine();
+                    BookingController.addNewBooking(bookingCustomerID, bookingDriverID, bookingCarID, bookingDescription, bookingDate, bookingStatus);
+                    Back();
+                    break;
+                case 31:
+                    BookingController.showListBooking(Booking.ListBooking);
+                    Back();
+                    break;
+                case 32:
+                    System.out.print("ID booking checkout:");
+                    int checkoutBookingID = in.nextInt();
+                    BookingController.checkoutBooking(checkoutBookingID);
+                    Back();
                     break;
 
 

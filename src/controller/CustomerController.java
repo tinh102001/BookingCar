@@ -2,10 +2,11 @@ package controller;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import model.Customer;
-import model.Person;
+import utils.Table;
 
 public class CustomerController {
 	private final static String Database = "CustomerData.txt";
@@ -23,6 +24,7 @@ public class CustomerController {
 			raf.writeBytes("\n" + data);
 
 			raf.close();
+			System.out.println("Successfully added new customer");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -79,6 +81,7 @@ public class CustomerController {
 				tmpraf.close();
 				raf.close();
 				tmpFile.delete();
+				System.out.println("Successfully update customer");
 			}
 
 			else {
@@ -134,6 +137,7 @@ public class CustomerController {
 				tmpraf.close();
 				raf.close();
 				tmpFile.delete();
+				System.out.println("Successfully delete customer");
 			}
 
 			else {
@@ -146,23 +150,23 @@ public class CustomerController {
 	}
 
 	public static void searchCustomerByID(int customerID) {
-		ArrayList<Person> listCustomerID = new ArrayList<>();
-		for (Person customer : Customer.ListCustomer) {
+		ArrayList<Customer> listCustomerID = new ArrayList<>();
+		for (Customer customer : Customer.ListCustomer) {
 			if (customer.getID() == customerID) {
 				listCustomerID.add(customer);
 			}
 		}
-		PersonController.showTablePerson(listCustomerID);
+		CustomerController.showTableCustomer(listCustomerID);
  	}
 
 	public static void searchCustomerByName(String customerName) {
-		ArrayList<Person> listCustomerName = new ArrayList<>();
-		for (Person customer : Customer.ListCustomer) {
+		ArrayList<Customer> listCustomerName = new ArrayList<>();
+		for (Customer customer : Customer.ListCustomer) {
 			if (customer.getName().toLowerCase().contains(customerName)) {
 				listCustomerName.add(customer);
 			}
 		}
-		PersonController.showTablePerson(listCustomerName);
+		CustomerController.showTableCustomer(listCustomerName);
 	}
 
 	public static int getLastIDCustomer() {
@@ -182,6 +186,31 @@ public class CustomerController {
 			return 0;
 		}
 		return ID;
+	}
+
+	public static void showTableCustomer(ArrayList<Customer> ListCustomers) {
+		Table table = new Table();
+		List<String> headersList = new ArrayList<>();
+		headersList.add("Id");
+		headersList.add("Name");
+		headersList.add("Phone Number");
+		headersList.add("Email");
+		headersList.add("Address");
+
+		List<List<String>> rowsList = new ArrayList<>();
+
+		for (Customer customer : ListCustomers) {
+			List<String> row = new ArrayList<>();
+			row.add(Integer.toString(customer.getID()));
+			row.add(customer.getName());
+			row.add(customer.getPhoneNo());
+			row.add(customer.getEmail());
+			row.add(customer.getAddress());
+
+			rowsList.add(row);
+		}
+
+		System.out.println(table.generateTable(headersList, rowsList));
 	}
 
 

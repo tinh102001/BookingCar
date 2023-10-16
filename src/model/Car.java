@@ -66,4 +66,5 @@ public class Car {
 	public void setStatus(String status) {
 		Status = status;
 	}
+
 }

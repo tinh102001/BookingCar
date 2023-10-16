@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.Car;
-import model.Customer;
 import utils.Table;
 
 public class CarController {
@@ -27,6 +26,7 @@ public class CarController {
             raf.writeBytes("\n" + data);
 
             raf.close();
+            System.out.println("Successfully added new car");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,6 +133,7 @@ public class CarController {
                 tmpraf.close();
                 raf.close();
                 tmpFile.delete();
+                System.out.println("Successfully delete car");
             } else {
                 raf.close();
                 System.out.println("Not found.");
@@ -142,6 +143,15 @@ public class CarController {
         }
     }
 
+    public static void searchCarByName(String carName) {
+        ArrayList<Car> listCarName = new ArrayList<>();
+        for (Car car : Car.ListCar) {
+            if (car.getDescription().toLowerCase().contains(carName)) {
+                listCarName.add(car);
+            }
+        }
+        CarController.showListCar(listCarName);
+    }
 
     public static ArrayList<Car> availableCars(ArrayList<Car> listCar) {
         ArrayList<Car> listAvailableCars = new ArrayList<>();
@@ -281,6 +291,17 @@ public class CarController {
             return 0;
         }
         return ID;
+    }
+
+    public static boolean isAvailable(int carID) {
+        for (Car car : Car.ListCar) {
+            if (car.getID() == carID) {
+                if (car.getStatus().equals("In Progress")) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
