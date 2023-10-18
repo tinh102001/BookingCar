@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.Car;
+import model.Driver;
 import utils.Table;
 
 public class CarController {
@@ -51,20 +52,16 @@ public class CarController {
                 File tmpFile = new File("temp.txt");
                 RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
                 raf.seek(0);
-                int id = 0;
                 while (raf.getFilePointer() < raf.length()) {
                     String dataCar = raf.readLine();
                     String[] parts = dataCar.split("\t", 6);
 
                     if (Integer.toString(carID).equals(parts[0])) {
-
-                        Car.ListCar.get(id).setStatus(Status);
-                        dataCar = Car.ListCar.get(id).getID() + "\t" + Car.ListCar.get(id).getType() + "\t" + Car.ListCar.get(id).getLicensePlate() + "\t" + Car.ListCar.get(id).getNoOfSeats() + "\t" + Car.ListCar.get(id).getDescription() + "\t" + Car.ListCar.get(id).getStatus();
+                        dataCar = parts[0] + "\t" + parts[1] + "\t" + parts[2] + "\t" + parts[3] + "\t" + parts[4] + "\t" + Status;
                     }
 
                     tmpraf.writeBytes(dataCar);
                     tmpraf.writeBytes(System.lineSeparator());
-                    id++;
                 }
 
                 raf.seek(0);
@@ -80,6 +77,11 @@ public class CarController {
                 tmpraf.close();
                 raf.close();
                 tmpFile.delete();
+                for (Car car : Car.ListCar) {
+                    if (car.getID() == carID) {
+                        car.setStatus(Status);
+                    }
+                }
             } else {
                 raf.close();
                 System.out.println("Not found ");
@@ -107,17 +109,14 @@ public class CarController {
                 File tmpFile = new File("temp.txt");
                 RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
                 raf.seek(0);
-                int id = 0;
                 while (raf.getFilePointer() < raf.length()) {
                     String dataCar = raf.readLine();
                     String[] parts = dataCar.split("\t", 5);
                     if (Integer.toString(carID).equals(parts[0])) {
-                        Car.ListCar.remove(id);
                         continue;
                     }
                     tmpraf.writeBytes(dataCar);
                     tmpraf.writeBytes(System.lineSeparator());
-                    id++;
                 }
 
                 raf.seek(0);
@@ -133,6 +132,7 @@ public class CarController {
                 tmpraf.close();
                 raf.close();
                 tmpFile.delete();
+                Car.ListCar.removeIf(car -> car.getID() == carID);
                 System.out.println("Successfully delete car");
             } else {
                 raf.close();

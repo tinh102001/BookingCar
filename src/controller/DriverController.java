@@ -53,22 +53,16 @@ public class DriverController {
                 File tmpFile = new File("temp2.txt");
                 RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
                 raf.seek(0);
-                int id = 0;
                 while (raf.getFilePointer() < raf.length()) {
                     String dataDriver = raf.readLine();
                     String[] parts = dataDriver.split("\t", 7);
 
                     if (Integer.toString(driverID).equals(parts[0])) {
-                        Driver.ListDriver.get(id).setName(Name);
-                        Driver.ListDriver.get(id).setEmail(Email);
-                        Driver.ListDriver.get(id).setAddress(Address);
-                        Driver.ListDriver.get(id).setPhoneNo(PhoneNo);
-                        dataDriver = driverID + "\t" + Name + "\t" + PhoneNo + "\t" + Email + "\t" + Address + "\t" + Driver.ListDriver.get(id).getStatus() + "\t" + Driver.ListDriver.get(id).getPoint();
+                        dataDriver = driverID + "\t" + Name + "\t" + PhoneNo + "\t" + Email + "\t" + Address + "\t" + parts[5] + "\t" + parts[6];
                     }
 
                     tmpraf.writeBytes(dataDriver);
                     tmpraf.writeBytes(System.lineSeparator());
-                    id++;
                 }
 
                 raf.seek(0);
@@ -84,6 +78,14 @@ public class DriverController {
                 tmpraf.close();
                 raf.close();
                 tmpFile.delete();
+                for (Driver driver : Driver.ListDriver) {
+                    if (driver.getID() == driverID) {
+                        driver.setName(Name);
+                        driver.setPhoneNo(PhoneNo);
+                        driver.setEmail(Email);
+                        driver.setAddress(Address);
+                    }
+                }
                 System.out.println("Successfully update driver");
             } else {
                 raf.close();
@@ -112,17 +114,14 @@ public class DriverController {
                 File tmpFile = new File("temp2.txt");
                 RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
                 raf.seek(0);
-                int id = 0;
                 while (raf.getFilePointer() < raf.length()) {
                     String dataDriver = raf.readLine();
                     String[] parts = dataDriver.split("\t", 7);
                     if (Integer.toString(driverID).equals(parts[0])) {
-                        Driver.ListDriver.remove(id);
                         continue;
                     }
                     tmpraf.writeBytes(dataDriver);
                     tmpraf.writeBytes(System.lineSeparator());
-                    id++;
                 }
 
                 raf.seek(0);
@@ -138,6 +137,7 @@ public class DriverController {
                 tmpraf.close();
                 raf.close();
                 tmpFile.delete();
+                Driver.ListDriver.removeIf(driver -> driver.getID() == driverID);
                 System.out.println("Successfully delete driver");
             } else {
                 raf.close();

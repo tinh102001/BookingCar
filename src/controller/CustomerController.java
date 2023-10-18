@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.Customer;
+import model.Driver;
 import utils.Table;
 
 public class CustomerController {
@@ -50,22 +51,16 @@ public class CustomerController {
 				File tmpFile = new File("temp.txt");
 				RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
 				raf.seek(0);
-				int id = 0;
 				while (raf.getFilePointer() < raf.length()) {
 					String dataCustomer = raf.readLine();
 					String[] parts = dataCustomer.split("\t", 5);
 
 					if (Integer.toString(customerID).equals(parts[0])) {
-						Customer.ListCustomer.get(id).setName(Name);
-						Customer.ListCustomer.get(id).setEmail(Email);
-						Customer.ListCustomer.get(id).setAddress(Address);
-						Customer.ListCustomer.get(id).setPhoneNo(PhoneNo);
 						dataCustomer = customerID + "\t" + Name + "\t" + PhoneNo + "\t" + Email + "\t" + Address;
 					}
 
 					tmpraf.writeBytes(dataCustomer);
 					tmpraf.writeBytes(System.lineSeparator());
-					id++;
 				}
 
 				raf.seek(0);
@@ -81,6 +76,14 @@ public class CustomerController {
 				tmpraf.close();
 				raf.close();
 				tmpFile.delete();
+				for (Customer customer : Customer.ListCustomer) {
+					if (customer.getID() == customerID) {
+						customer.setName(Name);
+						customer.setPhoneNo(PhoneNo);
+						customer.setEmail(Email);
+						customer.setAddress(Address);
+					}
+				}
 				System.out.println("Successfully update customer");
 			}
 
@@ -111,17 +114,14 @@ public class CustomerController {
 				File tmpFile = new File("temp.txt");
 				RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
 				raf.seek(0);
-				int id = 0;
 				while (raf.getFilePointer() < raf.length()) {
 					String dataCustomer = raf.readLine();
 					String[] parts = dataCustomer.split("\t", 5);
 					if (Integer.toString(customerID).equals(parts[0])) {
-						Customer.ListCustomer.remove(id);
                         continue;
                     }
 					tmpraf.writeBytes(dataCustomer);
 					tmpraf.writeBytes(System.lineSeparator());
-					id++;
 				}
 
 				raf.seek(0);
@@ -137,6 +137,7 @@ public class CustomerController {
 				tmpraf.close();
 				raf.close();
 				tmpFile.delete();
+				Customer.ListCustomer.removeIf(customer -> customer.getID() == customerID);
 				System.out.println("Successfully delete customer");
 			}
 
